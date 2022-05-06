@@ -18,6 +18,9 @@ double secs = 0;
 int mins = 0;
 int startTime;
 
+int buttonInput = 4;
+int buttonOutput = 5;
+
 void setup() {
   xAxis.attach(2);
   xAxis.write(0);
@@ -29,11 +32,22 @@ void setup() {
   lcd.backlight();
 
   pinMode(swPin, INPUT_PULLUP);
+  pinMode(buttonInput, INPUT);
+  pinMode(buttonOutput, OUTPUT);
+  
   Serial.begin(9600);
 }
 
 void loop() {
   if (startTimer) {
+    if (digitalRead(buttonInput)) {
+      startTimer = false;
+      delay(5000);
+      lcd.clear();
+      return;
+    }
+
+    
     int xCoord = map(analogRead(xPin), 0, 1023, 0, 180);
     int yCoord = map(analogRead(yPin), 0, 1023, 0, 180);
   
@@ -57,13 +71,12 @@ void loop() {
     lcd.print("Time");
     lcd.setCursor(0, 1);
     lcd.print(t);
-
-    Serial.println(t);
     
   } else {
     if (!digitalRead(swPin)) {
       startTimer = true;
       startTime = millis();
+      digitalWrite(buttonOutput, HIGH);
       lcd.clear();
       
     } else {

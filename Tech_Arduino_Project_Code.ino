@@ -48,10 +48,6 @@ void loop() {
       lcd.clear();
       return;
     }
-<<<<<<< HEAD
-=======
-
->>>>>>> bd9a0d7700a3eea7af9d37a670226424a962233d
     
     int xCoord = map(analogRead(xPin), 0, 1023, 0, 180);
     int yCoord = map(analogRead(yPin), 0, 1023, 0, 180);

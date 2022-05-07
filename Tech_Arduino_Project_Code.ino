@@ -1,5 +1,4 @@
 #include <Servo.h>
-#include <Wire.h>
 #include <LiquidCrystal_I2C.h>
 
 Servo xAxis;
@@ -16,17 +15,20 @@ double timer = 0;
 double tSecs = 0;
 double secs = 0;
 int mins = 0;
-int startTime;
+unsigned long startTime;
+
+int buttonInput = 4;
+int buttonOutput = 5;
 
 int buttonInput = 4;
 int buttonOutput = 5;
 
 void setup() {
   xAxis.attach(2);
-  xAxis.write(0);
+  xAxis.write(90);
 
   yAxis.attach(3);
-  yAxis.write(0);
+  yAxis.write(90);
 
   lcd.init();
   lcd.backlight();
@@ -46,7 +48,10 @@ void loop() {
       lcd.clear();
       return;
     }
+<<<<<<< HEAD
+=======
 
+>>>>>>> bd9a0d7700a3eea7af9d37a670226424a962233d
     
     int xCoord = map(analogRead(xPin), 0, 1023, 0, 180);
     int yCoord = map(analogRead(yPin), 0, 1023, 0, 180);

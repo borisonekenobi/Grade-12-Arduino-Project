@@ -1,177 +1,62 @@
-//Include the LCD Library.
-
-#include <Wire.h> 
-
 #include <LiquidCrystal_I2C.h>
 
+LiquidCrystal_I2C lcd(0x27, 16, 2);
 
+const int previousChar = 2;		// Select previous character
+const int upChar = 3;					// Set as previous character    (M => L)
+const int downChar = 4;				// Set as next character        (M => N)
+const int nextChar = 5;				// Select next character
+const char chars[] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
+const String words[] = {"able", "acid", "aged", "also", "area", "army", "away", "baby", "back", "ball", "band", "bank", "base", "bath", "bear", "beat", "been", "beer", "bell", "belt", "best", "bill", "bird", "blow", "blue", "boat", "body", "bomb", "bond", "bone", "book", "boom", "born", "boss", "both", "bowl", "bulk", "burn", "bush", "busy", "call", "calm", "came", "camp", "card", "care", "case", "cash", "cast", "cell", "chat", "chip", "city", "club", "coal", "coat", "code", "cold", "come", "cook", "cool", "cope", "copy", "CORE", "cost", "crew", "crop", "dark", "data", "date", "dawn", "days", "dead", "deal", "dean", "dear", "debt", "deep", "deny", "desk", "dial", "dick", "diet", "disc", "disk", "does", "done", "door", "dose", "down", "draw", "drew", "drop", "drug", "dual", "duke", "dust", "duty", "each", "earn", "ease", "east", "easy", "edge", "else", "even", "ever", "evil", "exit", "face", "fact", "fail", "fair", "fall", "farm", "fast", "fate", "fear", "feed", "feel", "feet", "fell", "felt", "file", "fill", "film", "find", "fine", "fire", "firm", "fish", "five", "flat", "flow", "food", "foot", "ford", "form", "fort", "four", "free", "from", "fuel", "full", "fund", "gain", "game", "gate", "gave", "gear", "gene", "gift", "girl", "give", "glad", "goal", "goes", "gold", "Golf", "gone", "good", "gray", "grew", "grey", "grow", "gulf", "hair", "half", "hall", "hand", "hang", "hard", "harm", "hate", "have", "head", "hear", "heat", "held", "hell", "help", "here", "hero", "high", "hill", "hire", "hold", "hole", "holy", "home", "hope", "host", "hour", "huge", "hung", "hunt", "hurt", "idea", "inch", "into", "iron", "item", "jack", "jane", "jean", "john", "join", "jump", "jury", "just", "keen", "keep", "kent", "kept", "kick", "kill", "kind", "king", "knee", "knew", "know", "lack", "lady", "laid", "lake", "land", "lane", "last", "late", "lead", "left", "less", "life", "lift", "like", "line", "link", "list", "live", "load", "loan", "lock", "logo", "long", "look", "lord", "lose", "loss", "lost", "love", "luck", "made", "mail", "main", "make", "male", "many", "Mark", "mass", "matt", "meal", "mean", "meat", "meet", "menu", "mere", "mike", "mile", "milk", "mill", "mind", "mine", "miss", "mode", "mood", "moon", "more", "most", "move", "much", "must", "name", "navy", "near", "neck", "need", "news", "next", "nice", "nick", "nine", "none", "nose", "note", "okay", "once", "only", "onto", "open", "oral", "over", "pace", "pack", "page", "paid", "pain", "pair", "palm", "park", "part", "pass", "past", "path", "peak", "pick", "pink", "pipe", "plan", "play", "plot", "plug", "plus", "poll", "pool", "poor", "port", "post", "pull", "pure", "push", "race", "rail", "rain", "rank", "rare", "rate", "read", "real", "rear", "rely", "rent", "rest", "rice", "rich", "ride", "ring", "rise", "risk", "road", "rock", "role", "roll", "roof", "room", "root", "rose", "rule", "rush", "ruth", "safe", "said", "sake", "sale", "salt", "same", "sand", "save", "seat", "seed", "seek", "seem", "seen", "self", "sell", "send", "sent", "sept", "ship", "shop", "shot", "show", "shut", "sick", "side", "sign", "site", "size", "skin", "slip", "slow", "snow", "soft", "soil", "sold", "sole", "some", "song", "soon", "sort", "soul", "spot", "star", "stay", "step", "stop", "such", "suit", "sure", "take", "tale", "talk", "tall", "tank", "tape", "task", "team", "tech", "tell", "tend", "term", "test", "text", "than", "that", "them", "then", "they", "thin", "this", "thus", "till", "time", "tiny", "told", "toll", "tone", "tony", "took", "tool", "tour", "town", "tree", "trip", "true", "tune", "turn", "twin", "type", "unit", "upon", "used", "user", "vary", "vast", "very", "vice", "view", "vote", "wage", "wait", "wake", "walk", "wall", "want", "ward", "warm", "wash", "wave", "ways", "weak", "wear", "week", "well", "went", "were", "west", "what", "when", "whom", "wide", "wife", "wild", "will", "wind", "wine", "wing", "wire", "wise", "wish", "with", "wood", "word", "wore", "work", "yard", "yeah", "year", "your", "zero", "zone"};
 
-LiquidCrystal_I2C lcd(0x27, 2, 1, 0, 4, 5, 6, 7, 3, POSITIVE);
+int typeIndex = 0; 
+int charIndex = 0;
+char word[] = {'A', 'A', 'A', 'A'};
 
-
-
-
-
-const int buttonPin1 = 2;     // Charachter change button
-
-const int buttonPin2 = 3;     // Move button
-
-const int buttonPin3 = 4;     // Reset screen button
-
-const char chars[] = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','.',',','1','2','3','4','5','6','7','8','9','0','-','*','@','!','$','&','(',')'};//add any additional characters
-
-
-
-int charindex = 0;
-
-int buttonState1 = 0;
-
-int buttonState2 = 0;
-
-int buttonState3 = 0;
-
-int charsSize = 0;
-
-int cx = 0;
-
-int cy = 0;
-
-
-
-
-
-
+bool startGame = false;
 
 void setup() {
-
- //init LCD
-
- lcd.begin(16,2);
-
- lcd.print("ARDUINO TYPE");
-
- lcd.setCursor(2,4);
-
- lcd.print("WRITER");
-
- delay(2000);
-
- lcd.clear();
-
- lcd.setCursor(0, 0);
-
- lcd.blink();  
-
- //Charachters array size
-
- charsSize = sizeof(chars);
-
- //LED init
-
- // initialize the pushbutton pin as an input:
-
- pinMode(buttonPin1, INPUT);
-
- pinMode(buttonPin2, INPUT);
-
- pinMode(buttonPin3, INPUT);
-
- 
-
- 
-
+  // initialize LCD
+  lcd.init();
+  lcd.backlight();
+ 	// initialize the pushbutton pin as an input:
+	pinMode(previousChar, INPUT);
+	pinMode(upChar, INPUT);
+	pinMode(downChar, INPUT);
+	pinMode(nextChar, INPUT);
 }
 
-
-
 void loop() {
+	if (!startGame) {
+		// TODO: choose random word
+		startGame = true;
+		return;
+	}
 
- buttonState1 = digitalRead(buttonPin1);
+	if (digitalRead(previousChar) == HIGH) {
+		typeIndex--;
+		if (typeIndex < 0) typeIndex = 0;
+	}
+	if (digitalRead(upChar) == HIGH) {
+		charIndex--;
+		if (charIndex < 0) charIndex = sizeof(chars) - 1;
+	}
+	if (digitalRead(downChar) == HIGH) {
+		charIndex++;
+		if (charIndex >= 26) charIndex = 0;
+	}
+	if (digitalRead(nextChar) == HIGH) {
+		typeIndex++;
+		if (typeIndex >= 4) checkWord();
+	}
 
- buttonState2 = digitalRead(buttonPin2);
+	lcd.setCursor(5 + typeIndex, 1);
+	lcd.print(chars[charIndex]);
+	word[typeIndex] = chars[charIndex];
 
- buttonState3 = digitalRead(buttonPin3);
+	delay(170);
+}
 
- //
-
- if (buttonState1 == HIGH) {
-
-   if(charindex == charsSize){
-
-     charindex = 0;
-
-   }
-
-   // change char and turn led on:
-
-
-
-   lcd.print(chars[charindex]);
-
-   lcd.setCursor(cx, cy);
-
-   charindex++;
-
- } else {
-
-
-
- }
-
- //Move to next pixel
-
- if (buttonState2 == HIGH) {
-
-
-
-   charindex = 0;
-
-   cx++;
-
-   if(cx == 16){
-
-     cx = 0;
-
-     cy++;
-
-   }
-
-   if(cy == 2){
-
-     cy = 0;
-
-   }
-
-   lcd.setCursor(cx, cy);
-
- }else {
-
- 
-
- }
-
- //reset
-
- if (buttonState3 == HIGH) {
-
- 
-
-   charindex = 0;
-
-   cx = 0;
-
-   cy = 0;
-
-   lcd.setCursor(cx, cy);
-
-   lcd.clear();
-
- }else {
-
-
-
- } 
-
- delay(170);
-
+void checkWord() {
+	//TODO: check correctness of words
 }

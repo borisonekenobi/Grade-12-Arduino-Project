@@ -20,9 +20,6 @@ unsigned long startTime;
 int buttonInput = 4;
 int buttonOutput = 5;
 
-int buttonInput = 4;
-int buttonOutput = 5;
-
 void setup() {
   xAxis.attach(2);
   xAxis.write(90);

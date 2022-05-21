@@ -2,6 +2,7 @@
 
 LiquidCrystal_I2C lcd(0x27, 16, 2);
 
+const int numTries = 5;
 const int previousChar = 2;		// Select previous character
 const int upChar = 3;			// Set as previous character    (M => L)
 const int downChar = 4;			// Set as next character        (M => N)
@@ -34,6 +35,10 @@ void loop() {
 		return;
 	}
 
+	if (numTries <= 0) {
+		loseSequence();
+	}
+
 	if (digitalRead(previousChar) == HIGH) {
 		typeIndex--;
 		if (typeIndex < 0) typeIndex = 0;
@@ -59,6 +64,7 @@ void loop() {
 }
 
 void checkWord() {
+	numTries--;
 	int correctCounter = 0;
 
 	for (int i = 0; i < sizeof(word); i++) {
@@ -89,4 +95,9 @@ bool isInArr(char element, char[] array) {
 void winSequence() {
 	startGame = false;
 	// TODO: make a win sequence
+}
+
+void loseSequence() {
+	startGame = false;
+	// TODO: make a lose sequence
 }

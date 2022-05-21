@@ -88,5 +88,5 @@ bool isInArr(char element, char[] array) {
 
 void winSequence() {
 	startGame = false;
-	// make a win sequence
+	// TODO: make a win sequence
 }

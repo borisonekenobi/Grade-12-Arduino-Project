@@ -1,6 +1,6 @@
 //#include <LiquidCrystal_I2C.h>
 
-//LiquidCrystal_I2C lcd(0x27, 16, 2);
+// LiquidCrystal_I2C lcd(0x27, 16, 2);
 
 const int previousChar = 2; // Select previous character
 const int upChar = 3;		// Set as previous character    (M => L)
@@ -30,8 +30,8 @@ void loop()
 	if (!startGame)
 	{
 		// TODO: choose random word:
-        const int len = sizeof(words) / sizeof(words[0]);
-        lcd.print(words[random(len)]);
+		const int len = sizeof(words) / sizeof(words[0]);
+		lcd.print(words[random(len)]);
 		numTries = 5;
 		startGame = true;
 		return;
@@ -73,11 +73,11 @@ void loop()
 	delay(170);
 }
 
-void setup() 
+void setup()
 {
-  pinMode(redPin, OUTPUT);
-  pinMode(greenPin, OUTPUT);
-  pinMode(bluePin, OUTPUT);
+	pinMode(redPin, OUTPUT);
+	pinMode(greenPin, OUTPUT);
+	pinMode(bluePin, OUTPUT);
 }
 
 void checkWord()
@@ -87,83 +87,86 @@ void checkWord()
 
 	for (int i = 0; i < sizeof(word); i++)
 	{
-      // light green led. 
+		// light green led.
 		if (word[i] == randomWord[i])
 		{
 			correctCounter++;
-          	if(i == 0)
-            {
-              int redPin= 13;
-              int greenPin = 12;
-              int bluePin = 11; 
-              setColor(0,255, 0);
-            }
-          	else if(i == 1)
-            {
-              int redPin= 10;
-              int greenPin = 8;
-              int bluePin = 7;
-              setColor(0,255, 0);
-            }
-          	else
-            {
-              int redPin= 6;
-              int greenPin = 5;
-              int bluePin = 0;
-              setColor(0,255, 0);
-            }
+			if (i == 0)
+			{
+				int redPin = 13;
+				int greenPin = 12;
+				int bluePin = 11;
+				setColor(0, 255, 0);
+			}
+			else if (i == 1)
+			{
+				int redPin = 10;
+				int greenPin = 8;
+				int bluePin = 7;
+				setColor(0, 255, 0);
+			}
+			else
+			{
+				int redPin = 6;
+				int greenPin = 5;
+				int bluePin = 0;
+				setColor(0, 255, 0);
+			}
 		}
 		else if (isInArr(word[i], randomWord))
 		{
 			// light up yellow LED
-          if(i == 0)
-            {
-              int redPin= 13;
-              int greenPin = 12;
-              int bluePin = 11;              
-              setColor(255,215,0);
-            }
-          	else if(i == 1)
-            {
-              int redPin= 10;
-              int greenPin = 8;
-              int bluePin = 7;
-				setColor(255,215,0);            }
-          	else
-            {
-              int redPin= 6;
-              int greenPin = 5;
-              int bluePin = 0;
-				setColor(255,215,0);            }
+			if (i == 0)
+			{
+				int redPin = 13;
+				int greenPin = 12;
+				int bluePin = 11;
+				setColor(255, 215, 0);
+			}
+			else if (i == 1)
+			{
+				int redPin = 10;
+				int greenPin = 8;
+				int bluePin = 7;
+				setColor(255, 215, 0);
+			}
+			else
+			{
+				int redPin = 6;
+				int greenPin = 5;
+				int bluePin = 0;
+				setColor(255, 215, 0);
+			}
 		}
 		else
 		{
 			// light up blue LED
-          if(i == 0)
-            {
-              int redPin= 13;
-              int greenPin = 12;
-              int bluePin = 11;
-              setColor(0, 0, 255);
-            }
-          	else if(i == 1)
-            {
-              int redPin= 10;
-              int greenPin = 8;
-              int bluePin = 7;
-              setColor(0, 0, 255);            }
-          	else
-            {
-              int redPin= 6;
-              int greenPin = 5;
-              int bluePin = 0;
-				setColor(0, 0, 255);            
-            }
+			if (i == 0)
+			{
+				int redPin = 13;
+				int greenPin = 12;
+				int bluePin = 11;
+				setColor(0, 0, 255);
+			}
+			else if (i == 1)
+			{
+				int redPin = 10;
+				int greenPin = 8;
+				int bluePin = 7;
+				setColor(0, 0, 255);
+			}
+			else
+			{
+				int redPin = 6;
+				int greenPin = 5;
+				int bluePin = 0;
+				setColor(0, 0, 255);
+			}
 		}
 	}
 	delay(1000);
 	// TODO: turn off all LEDs
-  	setColor(0, 0, 0);
+	setColor(0, 0, 0);
 
 	if (correctCounter >= 3)
 	{
